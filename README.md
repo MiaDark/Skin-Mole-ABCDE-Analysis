@@ -41,6 +41,23 @@ When you run one of these scripts, it will automatically perform the following i
 - Saves full results to: [colorspace]_statistical_results.csv<br>
 
 
+## Setup and Installation
+
+### 1. Requirements
+All dependencies are listed in `requirements.txt`.
+
+```bash
+# Create and activate a virtual environment 
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS / Linux
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
 
 
   
+
+
