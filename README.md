@@ -3,16 +3,44 @@ Four files including code for analyzing images of skin moles. (Segmentation, cal
 
 The hausDim function is written by Alceu Ferraz Costa. It is converted to python for this analysis. 
 ## Features
-- **Segmentation of moles**: Extract the mole region from the background.
-- **Calculating Box-counting dimension**
-- **Statistical Analysis**: Calculate statistical differences between benign and malignant moles based on box-counting dimensions.
-- **Color Space Analysis**: Feature extraction from different color spaces to analyze properties of skin moles.
-- **Statistical Analysis**: Calculate statistical differences between benign and malignant moles based on color characteristics.
+Four independent Python scripts:
 
-## Color Spaces Used
-- HSV (Hue, Saturation, Value)
-- Lab (L*, a*, b*)
-- XYZ (X, Y, Z)
-- YCbCr (Y, Cb, Cr)
+1. mole_hausdorff_hsv_analysis.py <br>
+2. mole_hausdorff_xyz_analysis.py <br>
+3. mole_hausdorff_ycbcr_analysis.py <br>
+4. mole_hausdorff_lab_analysis.py <br>
+
+Each script performs the exact same workflow but in a different color space (HSV, CIE XYZ, YCbCr, or Lab). 
+
+## What Each Script Does (Step-by-Step)<br>
+When you run one of these scripts, it will automatically perform the following in sequence:
+
+#### Segmentation<br>
+- Reads all original images from the Benign and Malignant folders <br>
+- Segments the mole using the luminance/lightness channel of the respective color space (V for HSV, Y for XYZ & YCbCr, L for Lab) + Otsu thresholding <br>
+- Crops the mole tightly and resizes it to 300×300 pixels <br>
+- Saves the segmented images into a new subfolder <br>
+
+
+#### Hausdorff (Fractal) Dimension Calculation<br>
+- Computes fractal dimension of the whole filled mole <br>
+- Computes fractal dimension of the mole border only (thin contour)<br>
+- Saves results to: hausdorff_dimensions_[colorspace].csv<br>
+
+#### Color Feature Extraction <br>
+- Extracts statistical features (mean, median, std, min, max) from all three channels <br>
+- You can choose (via toggle) to extract from:<br>
+        - Whole mole (default) <br>
+        - Border ring only<br>
+- Saves to: mole_[colorspace]_features_whole.csv or mole_[colorspace]_features_border.csv <br>
+
+#### Statistical Comparison<br>
+- Tests each feature for normality (Shapiro-Wilk)<br>
+- Performs appropriate test (t-test if normal, Mann-Whitney U otherwise)<br>
+- Prints and saves significant features (p < 0.05)<br>
+- Saves full results to: [colorspace]_statistical_results.csv<br>
+
+
+
 
   
